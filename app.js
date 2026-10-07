@@ -1,33 +1,49 @@
 const http=require('http');
+const fs=require('fs');
 
 const server = http.createServer((req,res) => {
-    console.log("Server is created");
+    const url = req.url;
+    const method = req.method;
 
-    res.setHeader('content-Type','text/html');
-    if(req.url =='/'){
-        res.statusCode = 200;
-        res.end("<h1>Hello world</h1>");
+    if(res.url === '/'){
+        res.setHeader('content-Type','text/html');
+        
+        res.end(`
+                <form action="/message" method="POST">
+                    <label>Name:</label>
+                    <input type="text" name="username"></input>
+                    <button type="submit">ADD</button>
+                </form>
+            `)
     }
-    else if(req.url= '/pizza'){
-        res.statusCode = 200;
-        res.end("<h1>This is your pizza</h1>");
+    else{
+        if(req.url === "/message"){
+            let body = [];
+            req.on("data",(chunks) => {
+                body.push(chunks);
+            });
+
+            req.on("end",() => {
+                let buffer = Buffer.concat(body);
+                console.log(buffer);
+
+                let formData = buffer.toString();
+                console.log(formData);
+
+                const formValues = formData.split("=");
+
+                fs.writeFile("formValues.txt",formValues,(err) => {
+                    res.statusCode = 302;
+
+                    res.setHeader('Location','/');
+                    res.end();
+
+                })
+            })
+
+        }
     }
-    else if(req.url = '/home'){
-        res.statusCode = 200;
-        res.end("<h1>Wlcome home</h1>");
-    }
-    else if(req.url = '/about'){
-        res.statusCode = 200;
-        res.end("<h1>Welcome to about us</h1>");
-    }
-    else if(req.url = '/node'){
-        res.statusCode = 200;
-        res.end("<h1>Welcome to my node js</h1>");
-    }
-    else {
-        res.statusCode = 404;
-        res.end("<h1>Page not found</h1>");
-    }
+    
 })
 
 let port = 3000;
