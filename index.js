@@ -2,11 +2,9 @@ const express = require('express');
 
 const app = express();
 
-const productRouter = require('./routers/products');
-const categoriesRouter = require('./router/categories');
+const booksRouter = require("./routers/books");
 
-app.use("/products",productRouter);
-app.use("/categories",categoriesRouter);
+app.use("/books",booksRouter);
 
 app.listen(3000, () => {
     console.log("Server is up and running on port 3000! Ready to handle requests");
