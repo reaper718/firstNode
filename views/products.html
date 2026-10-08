@@ -1,9 +1,12 @@
 <html>
     <body>
-        <form>
+        <form onsubmit="onSubmitHandler()">
             <label>Product Name:</label>
             <input type="text" id="product" name="productName">
             <button type="submit">Add Product</button>
         </form>
     </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+    <script src="../public/js/product.js"></script>
 </html>
