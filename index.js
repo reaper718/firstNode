@@ -2,19 +2,14 @@ const express = require('express');
 
 const app = express();
 
-const StudentRouter = require("./routers/student");
-const CoursesRouter = require("./routers/courses");
+const userRoutes = require("./routers/userRoutes");
+const productRouter = require("./routers/productRouter");
+const cartRouter = require("./routers/cartRouter");
 
-app.get("/",(req,res) => {
-    res.send("Welcome to the Student & Course Portal API");
-})
+app.use("/users",userRoutes);
+app.use("/products",productRouter);
+app.use("/cart",cartRouter);
 
-app.use("/student",StudentRouter);
-app.use("/courses",CoursesRouter);
-
-app.use((req,res) => {
-    res.status(404).send("Page not found");
-})
 
 app.listen(3000, () => {
     console.log("Server is up and running on port 3000! Ready to handle requests");
