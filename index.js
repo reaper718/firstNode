@@ -7,14 +7,20 @@ app.use((req,res,next) => {
     next();
 })
 
-app.use("/welcome",(req,res,next) => {
-    req.user = "Rudra";
-    next();
+app.post("/orders",(req,res) => {
+    res.send('A new order has been created');
 })
 
-app.get("/welcome",(req,res) => {
-    console.log("Inside welcome request");
-    res.send(`<h1>Welcome ${req.user}</h1>`);
+app.get("/orders",(req,res) => {
+    console.log("Here is the list of orders");
+})
+
+app.post("/users",(req,res) => {
+    res.send('A new user has been created');
+})
+
+app.get("/orders",(req,res) => {
+    console.log("Here is the list of users");
 })
 
 app.listen(3000, () => {
