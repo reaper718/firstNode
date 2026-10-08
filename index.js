@@ -3,7 +3,18 @@ const express = require('express');
 const app = express();
 
 app.use((req,res,next) => {
-    console.log("Output from middleware 1")
+    console.log("OAuthentication Middleware called");
+    next();
+})
+
+app.use("/welcome",(req,res,next) => {
+    req.user = "Rudra";
+    next();
+})
+
+app.get("/welcome",(req,res) => {
+    console.log("Inside welcome request");
+    res.send(`<h1>Welcome ${req.user}</h1>`);
 })
 
 app.listen(3000, () => {
