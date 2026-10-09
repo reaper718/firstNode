@@ -4,6 +4,8 @@ const studentRouter = require('./routers/studentRoutes');
 const busRouter = require('./routers/busRoutes');
 const app = express();
 
+require('./models');
+
 app.use(express.json())
 
 app.use("/students",studentRouter);
