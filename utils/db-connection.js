@@ -15,21 +15,17 @@ connection.connect((err) => {
 
     console.log("connection created");
 
-    const createQuery = `create table IF NOT EXISTS payments (
-        id int AUTO_INCREMENT PRIMARY KEY,
-        amountPaid int,
-        paymentStatus varchar(10)
-    )`
+    // const createQuery = `alter table students add column age int`;
 
-    connection.execute(createQuery, (err) => {
-        if(err){
-            console.log(err);
-            connection.end();
-            return;
-        }
+    // connection.execute(createQuery, (err) => {
+    //     if(err){
+    //         console.log(err);
+    //         connection.end();
+    //         return;
+    //     }
 
-        console.log("Table created");
-    })
+    //     console.log("Table altered");
+    // })
 })
 
 module.exports = connection;

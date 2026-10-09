@@ -61,8 +61,42 @@ const deleteEntry = (req,res) => {
     })
 }
 
+const getAllStudents = (req,res) => {
+    const query = `select * from students`;
+
+    db.execute(query, (err,data) => {
+        if(err){
+            res.staus(500).send(err.message);
+            db.end();
+            return;
+        }
+
+        console.log(data);
+        res.status(200).send(data);
+    })
+}
+
+const getStudentById = (req,res) => {
+    const {id} = req.params;
+
+    const query = `select * from students where id = ?`;
+
+    db.execute(query,[id],(err,data) => {
+        if(err){
+            res.staus(500).send(err.message);
+            db.end();
+            return;
+        }
+
+        console.log(data);
+        res.status(200).send(data);
+    })
+}
+
 module.exports ={
     addEntries,
     updateEntry,
-    deleteEntry
+    deleteEntry,
+    getAllStudents,
+    getStudentById
 }
