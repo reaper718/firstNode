@@ -1,9 +1,33 @@
+const db = require('../utils/db-connection');
+
 const getAllUsers = (req,res) => {
-    res.send("Fetching all users");
+    const query = `select * from users`;
+
+    db.execute(query,(err,data) => {
+        if(err){
+            res.status(500).send(err.message);
+            db.end();
+            return;
+        }
+
+        res.status(200).send(data);
+    })
 }
 
 const addUser = (req,res) => {
-    res.send("Adding a new user");
+    const {name ,email} = req.body;
+
+    const insertQuery = `INSERT INTO users (name,email) values (?,?)`;
+
+    db.execute(insertQuery,[name,email],(err) => {
+        if(err){
+            res.status(500).send(err.message);
+            db.end();
+            return;
+        }
+
+        res.status(200).send("user added");
+    })
 }
 
 const getUserById = (req,res) => {

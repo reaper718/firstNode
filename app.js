@@ -1,10 +1,13 @@
 const express = require('express');
 const db = require('./utils/db-connection');
 const studentRouter = require('./routers/studentRoutes');
-
+const busRouter = require('./routers/busRoutes');
 const app = express();
 
+app.use(express.json())
+
 app.use("/students",studentRouter);
+app.use("/buses",busRouter);
 
 app.listen(3000,() => {
     console.log("server is running ")
