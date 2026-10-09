@@ -1,33 +1,30 @@
 const db = require('../utils/db-connection');
+const Users = require('../models/users');
 
-const getAllUsers = (req,res) => {
-    const query = `select * from users`;
+const getAllUsers = async (req,res) => {
 
-    db.execute(query,(err,data) => {
-        if(err){
-            res.status(500).send(err.message);
-            db.end();
-            return;
-        }
+    try {
+        const users = await Users.findAll();
 
-        res.status(200).send(data);
-    })
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
-const addUser = (req,res) => {
-    const {name ,email} = req.body;
+const addUser = async (req,res) => {
+    try {
+        const {name ,email} = req.body;
 
-    const insertQuery = `INSERT INTO users (name,email) values (?,?)`;
+        const user = await Users.create({
+            name: name,
+            email:email
+        })
 
-    db.execute(insertQuery,[name,email],(err) => {
-        if(err){
-            res.status(500).send(err.message);
-            db.end();
-            return;
-        }
-
-        res.status(200).send("user added");
-    })
+        res.status(201).send("user created successfully");
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 const getUserById = (req,res) => {
