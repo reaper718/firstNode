@@ -1,31 +1,51 @@
-const mysql = require('mysql2');
+const {Sequelize} = require('sequelize');
 
-const connection = mysql.createConnection({
+const sequelize = new Sequelize('testDb', 'root','root', {
     host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'testDb'
-})
+    dialect: 'mysql'
+});
 
-connection.connect((err) => {
-    if(err){
-        console.log(err);
-        return ;
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log("Conection to database made");
+    } catch (error) {   
+        console.log(error);
     }
+})();
 
-    console.log("connection created");
+module.exports = sequelize;
 
-    // const createQuery = `alter table students add column age int`;
 
-    // connection.execute(createQuery, (err) => {
-    //     if(err){
-    //         console.log(err);
-    //         connection.end();
-    //         return;
-    //     }
 
-    //     console.log("Table altered");
-    // })
-})
+// const mysql = require('mysql2');
 
-module.exports = connection;
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'testDb'
+// })
+
+// connection.connect((err) => {
+//     if(err){
+//         console.log(err);
+//         return ;
+//     }
+
+//     console.log("connection created");
+
+//     // const createQuery = `alter table students add column age int`;
+
+//     // connection.execute(createQuery, (err) => {
+//     //     if(err){
+//     //         console.log(err);
+//     //         connection.end();
+//     //         return;
+//     //     }
+
+//     //     console.log("Table altered");
+//     // })
+// })
+
+// module.exports = connection;

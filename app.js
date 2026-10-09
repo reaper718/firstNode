@@ -9,6 +9,11 @@ app.use(express.json())
 app.use("/students",studentRouter);
 app.use("/buses",busRouter);
 
-app.listen(3000,() => {
+db.sync({force:true}).then(() => {
+    app.listen(3000,() => {
     console.log("server is running ")
 })
+}).catch((err) => {
+    console.log(err);
+})
+
