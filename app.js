@@ -19,10 +19,10 @@ connection.connect((err) => {
 
     console.log("connection created");
 
-    const createQuery = `create table students (
+    const createQuery = `create table payments (
         id int AUTO_INCREMENT PRIMARY KEY,
-        name varchar(20),
-        email varchar(20)
+        amountPaid int,
+        paymentStatus varchar(10)
     )`
 
     connection.execute(createQuery, (err) => {
